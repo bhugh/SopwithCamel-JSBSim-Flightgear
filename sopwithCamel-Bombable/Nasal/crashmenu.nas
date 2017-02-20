@@ -163,6 +163,10 @@ var crashContinue = func {
     #unfreeze/pause/crash
     setprop ("/sim/freeze/clock", 0);
     setprop ("/sim/freeze/master", 0);
+    setprop ("/sim/crashed",0); #we set this in jsbsim.nas, now we unset it
+    
+    #view.stepView(-1,1); #@ crash we kicked them out of the A/C (in JSBSim.nas), now we put them back in
+    setprop("/sim/current-view/view-number", 0);
 
 }
 

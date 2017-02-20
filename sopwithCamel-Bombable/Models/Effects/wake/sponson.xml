@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<!-- Adapted from :
+
+     Short S.23 Empire flying boat for FlightGear.
+     
+     Which was adapted by:
+     Boeing 314 flying boat for FlightGear.
+     
+     And now further adapted for the JSBSim Sopwith Camel.
+     This file is licensed under the GPL license version 2 or later.
+-->
+
+<PropertyList>
+
+  <name>Dust/Wake</name>
+  <type>normal</type>
+  <texture>wake.png</texture>
+  <emissive>false</emissive>
+  <lighting>true</lighting>
+
+  <offsets>
+   <heading-deg>180</heading-deg> 
+  </offsets>
+
+  <attach>world</attach>
+
+  <!-- TODO: We need a way to turn this off for people who don't want it/framerate issues or whatever -->
+  <condition>
+    <and>
+     <or>
+      <greater-than>
+       <property>velocities/groundspeed-kt</property>
+       <value>0.4</value>
+      </greater-than>
+      <greater-than>
+       <property>velocities/east-relground-fps</property>
+       <value>0.4</value>
+      </greater-than>
+      <greater-than>
+       <property>velocities/down-relground-fps</property>
+       <value>0.4</value>
+      </greater-than>
+      <greater-than>
+       <property>velocities/north-relground-fps</property>
+       <value>0.4</value>
+      </greater-than>
+      <greater-than>
+       <property>/fdm/jsbsim/accelerations/Nz</property>
+       <value>3</value>
+      </greater-than>
+      <equal>
+        <property>environment/terrain-info/terrain</property>    <!--ie, in the water if terrain==0 -->
+        <value>0</value>  
+      </equal>
+     </or>
+    </and>  
+  </condition>
+
+  <!-- <placer>
+   <type>point</type>                                           
+  </placer>   -->
+  
+  <placer>
+   <type>sector</type>                                          <!-- hull wide -->
+   <radius-min-m>-0</radius-min-m>
+   <radius-max-m alias="/params/placer-width"></radius-max-m>
+   
+  </placer>
+
+  <shooter>
+   <theta-min-deg>60.0</theta-min-deg>                          <!-- swirl towards the surface -->
+   <theta-max-deg>80.0</theta-max-deg>
+   <phi-min-deg>-90.0</phi-min-deg>                             <!-- cone behind the object -->
+   <phi-max-deg>90.0</phi-max-deg>
+   <speed-mps>
+    <value>5.0</value>                                          <!-- water inertia -->
+    <spread>0.50</spread>
+   </speed-mps>
+   <rotation-speed>
+    <x-min-deg-sec>40.0</x-min-deg-sec>
+    <y-min-deg-sec>0</y-min-deg-sec>
+    <z-min-deg-sec>0</z-min-deg-sec>
+    <x-max-deg-sec>70.0</x-max-deg-sec>
+    <y-max-deg-sec>0</y-max-deg-sec>
+    <z-max-deg-sec>0</z-max-deg-sec>
+   </rotation-speed>
+  </shooter>
+
+  <!-- TODO:  Previous we used the compression distance of the contact point to increase the amount of wake/dust.  This worked well except for when JSBSim lets that value get astonishingly large.  Best would be to use a combo of groundspeed & the compression distance, perhaps using a bit of nasal to limit the resulting value to a reasonable range. -->
+  
+  <!-- We generate wake-dust-rate in JSBSim.nas.  It always remains between 0 and 75 - something we can't say about groundspeed-kt! -->
+  <counter>
+   <particles-per-sec>
+    <property alias="/params/drag"/>
+    <factor>.6</factor>
+    <spread>5</spread>
+   </particles-per-sec>
+  </counter>
+
+  <align>billboard</align>
+
+  <particle>
+   <start>
+    <color>
+     <red><value>0.841</value></red>                            <!-- foam white -->
+     <green><value>0.905</value></green>
+     <blue><value>0.940</value></blue>
+     <alpha><value>0.5</value></alpha>
+    </color>
+    <size>
+     <value alias="/params/start-size"></value>
+     <spread>0.2</spread>
+    </size>
+   </start>
+   <end>
+    <color>
+     <red><value>0.541</value></red>                            <!-- wave blue -->
+     <green><value>0.605</value></green>
+     <blue><value>0.640</value></blue>
+     <alpha><value>0.0</value></alpha>
+    </color>
+    <size>
+     <value alias="/params/end-size"></value>
+     <spread>0.2</spread>
+    </size>
+   </end>
+
+   <life-sec>
+    <value>20</value>
+   </life-sec>
+   <mass-kg>0.02</mass-kg>
+   <radius-m>0.2</radius-m>
+  </particle>
+
+  <program>
+   <fluid>water</fluid>
+   <gravity>false</gravity>
+   <wind>false</wind>
+  </program>
+
+</PropertyList>

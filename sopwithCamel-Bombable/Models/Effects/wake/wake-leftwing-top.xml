@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<PropertyList>
+
+  <params>
+   <drag>/environment/terrain-info/gear/unit[9]/wake-dust-factor</drag>
+   <placer-width>1.5</placer-width>
+   <start-size>0.60</start-size>
+   <end-size>1.9</end-size>      
+  </params>
+
+  <particlesystem include="sponson.xml"/>
+   <offsets>              
+      <x-m> 1.16 </x-m>
+      <y-m> -4.166 </y-m>
+      <z-m> 1.2 </z-m>   
+   </offsets>
+
+  <animation>
+   <type>range</type>
+   <min-m>0</min-m>
+   <max-m>5000</max-m>
+  </animation>
+
+</PropertyList>

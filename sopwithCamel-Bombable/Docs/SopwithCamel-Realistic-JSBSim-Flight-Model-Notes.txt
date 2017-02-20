@@ -1,8 +1,8 @@
 SOPWITH CAMEL: A REALISTIC JSBSIM FLIGHT MODEL - NOTES
 
-Version 1.0
+Version 1.8
 
-Brent Hugh, 30 March 2013
+Brent Hugh, 28 May 2013
 
 brent@brenthugh.com
 
@@ -27,9 +27,9 @@ As one writer said:
   the impression of balancing an egg on the point of a needle rather than flying 
   an aircraft . . .
 
-  It was never forced into manoeuvres - they were executed by
-  light pressure on the controls and subsequently relaxing, or sometimes 
-  reversing, the pressure once the desired rate of response was attained.
+  It was never forced into manoeuvres - they were executed by light pressure on 
+  the controls and subsequently relaxing, or sometimes reversing, the pressure 
+  once the desired rate of response was attained.
 
 I set out to create a flight model of the Camel that would incorporate as many 
 of the documented combat flight characteristics of the Camel as possible, and 
@@ -55,14 +55,16 @@ Below is a list of Camel flight characteristics implemented in this JSBSim
 flight model, with a rating of the effectiveness of the current implementation 
 on a scale of 1-5:
 
-    1 - Not implemented
-    
-    2 - Partially implemented
-    
-    3 - Well implemented
-    
-    4 - As well implemented as possible, as far as I (a non-pilot) can determine 5 
-    - As well implemented as possible, according to an expert Camel pilot
+1 - Not implemented
+
+2 - Partially implemented
+
+3 - Well implemented
+
+4 - As well implemented as possible, as far as I (a non-pilot) can determine 
+
+5 - As well implemented as possible, according to an expert Camel pilot
+
 
 4 Weight, fuel capacity & weight, hp, dimensions and other technical details 
 implemented as described in attached article, 'The Sopwith "Camel"', The 
@@ -78,16 +80,26 @@ Camel pilot.
 4 Speed, RPM, horsepower of climbing and horizontal flight closes matches 
 published number. See for example the speed/climb rate graphs comparing the 
 JSBSim Camel and a historical 1917 Camel in the Docs subdirectory, file 
-Camel-JSBSim-calcs-2011-10D.xls NOTE: The numbers to not match exactly, of 
-course--tweaking parameters in JSBSim you can match any single parameter 
-exactly put not several parameters of different types exactly. Nevertheless 
-the results are very close, definitely show the characteristics of the Camel 
-(vs any of the other similar aircraft of the period) and in fact is probably 
-close enough to be within the bounds of individual variation of production 
-Camels. TODO: Tweak dive rate/speed to better match historical Camel.
+Camel-JSBSim-calcs-2011-10D.xls NOTE: 2013/04/07, with new lift/drag tables 
+need to re-check the speed/climb rates to make sure they still match 
+historical records NOTE: The numbers to not match exactly, of course--tweaking 
+parameters in JSBSim you can match any single parameter exactly put not 
+several parameters of different types exactly. Nevertheless the results are 
+very close, definitely show the characteristics of the Camel (vs any of the 
+other similar aircraft of the period) and in fact is probably close enough to 
+be within the bounds of individual variation of production Camels. TODO: Retest 
+these items on Ver 1.6; tweak dive rate/speed to better match historical Camel.
 
-3.5 Max sustained turn rate about 76 deg/sec (near stall speed, level flight, 
-sea level). TODO: Re-check turn rate.
+3 Max sustained turn rate about 76 deg/sec, ie 360 degrees in 4.7 seconds 
+(near stall speed, level flight, sea level). NOTE: Current best time is about 
+8-10 seconds; this matches reported times by Camel pilots of the time and the 
+4.7 sec/76 deg/sec might not be the most reliable number?
+
+4 Flown basically with rudder and elevator; rudder initiates turns etc and 
+ailerons only used as assist; many pilots didn't use ailerons much.
+
+3 Able to turn through 360 degrees (including roll in/out) in 8-10 seconds as 
+reported by WWI era Camel pilots. 
 
 4 Quick/light response to controls
 
@@ -100,7 +112,12 @@ that most other similar aircraft)
 correct
 
 4 Sluggish in left turns. Quicker through 270 degrees to the right than 90 
-degrees to the left. TODO: This may require some more refinement
+degrees to the left. NOTE: This is noticeable on flat, level, coordinated turns 
+at steady speed, may not be as dramatic as historic accounts indicate.  In Ver. 
+1.6 this effect is more obvious.
+
+4 Known for stalling/spinning on take-off if inattentive piloting let nose 
+rise during initial LH turn.
 
 4 Sensitive in a turn, if the turn were tightened just a little, it was likely 
 to whip into a tight spin.
@@ -108,25 +125,49 @@ to whip into a tight spin.
 4 All the weight of the engine, guns, and pilot was concentrated in the first 
 seven feet of a short 18-foot fuselage.
 
-3.5 Camel's elevator was powerful and sensitive. TODO: May require some 
-further refinement.
+3.5 Spins: Period of 1-2 seconds.  In Ver. 1.6 the stall and spin 
+characteristics we re-tweaked; this area may still need more work.
 
-3.5 Rudder was too small and relatively ineffective. TODO: May require some 
-further refinement.
+3 Loses 150-200 feet per revolution while spinning. NOTE: Loses about 125ft 
+per revolution, may need further tweaking.  Needs re-checking in ver. 1.6.
+
+4 Exit spin by gentle forward pressure in the stick, then *gradually* pull 
+out. AC will *sometimes* self-recover from a spin, but many times not.
+
+2.5 General spin characteristics similar to Camel; ability to do spin-related 
+maneuvers documented for the Camel--snap rolls, etc. Note that 'snap rolls' as 
+often described in relation to the Camel appear to not be true aerobatic snap 
+rolls as we would perform today (too vigorous for the Camel's light airframe) 
+but a kind of roll coordinated between rudder & aileron.
+
+3.7 Possible to fly inverted.  Stalls at about 65 mph/56 knots when flying 
+inverted. TODO: Tweak exact stall speed.
+
+3 In inverted flight, possible to stall and get into an inverted spin.
+
+3.8 Camel's elevator was powerful and sensitive. 
+
+3.9 Rudder was too small and relatively ineffective.
+
+3.9 Straight/forward flight requires slight right rudder at all times.
+
+3.8 Roll for turns initiated by rudder (due to large adverse yaw/drag of 
+ailerons); ailerons use to control roll in turns rather than initiate.
 
 4 Accelerating the aircraft caused the nose to climb, and swing to the left.
 
 4 At 110 miles per hour, there was about 15 to 20 pounds of back force on the 
 control column, which could not be trimmed out because the aircraft had no 
-pilot-adjustable, moveable horizontal stabilize
+pilot-adjustable, moveable horizontal stabilizer.
 
-3.7 Moving the stick forward to enter a dive caused the Camel to yaw left 
+3.8 Moving the stick forward to enter a dive caused the Camel to yaw left 
 because of gyroscopic force, and correcting this yaw with right rudder caused 
-the nose to pitch down sharply. TODO: Effect is definitely there but may 
-require some refinement
+the nose to pitch down sharply. 
 
 4 Steerable tail skid of the Camel helped to overcome a slight swing to the 
-left as I opened the throttle.
+left as I opened the throttle.  (This seems to be only a feature of replica 
+Camels, however it is implemented in FG as otherwise there is no way to 
+maneuver the A/C on the ground. In WWI ground crew would have been used instead.)
 
 4 The tail came up at about 20 knots.
 
@@ -138,17 +179,22 @@ With a 15 mph headwind, JSBSim Camel now matches this takeoff almost exactly.
 The rollout matches pretty well, too--though obviously much depends on the 
 exact surface and other details.
 
-4 Right rudder needed to keep AC on course early in roll-out
+3.5 Right rudder needed to keep AC on course early in roll-out.
 
-3.7 Left rudder needed later in roll-out as speed increases. NOTE: The JSBSim 
-doesn't currently require *full* L rudder, as some sources indicate, so some 
-refinement may be needed or these sources may be slightly exaggerating.
+3 Left rudder needed later in roll-out as speed increases. NOTE: The JSBSim 
+current requires R rudder on takeoff, not left, and not quite full rudder. Not 
+certain of the reason for this.
 
-3.7 In a wind of 10 to 15 knots you are airborne in a couple of plane lengths 
-at 35 mph. TODO: JSBSim is currently just a little over, this--airborn at 40 
-knots approx.
+3 Rudder loses effectiveness as soon as it drops on landing. NOTE: JSBSim 
+implements steering in the taildragger when it's touching ground. This may not 
+be 100% authentic, but otherwise it's just impossible to maneuver the Camel on 
+the ground in FG!
 
-4 Rate of climb of almost 1,000 feet a minute climbing out of take-off.
+4 In a wind of 10 to 15 knots you are airborne in a couple of plane lengths 
+at 35 mph. 
+
+4 Rate of climb of almost 1,000 feet a minute climbing out of take-off.  
+TODO: Need to verify/tweak exact climb rates & match to historical data.
 
 4 Capable of looping, 110 mph required.
 
@@ -157,21 +203,51 @@ in the sky, and faster than any other WWI aircraft I have flown.
 
 4 Tail heavy with full fuel
 
-2.5 Slightly nose heavy with empty fuel. TODO: With fuel nearly empty it is 
-noticeably less tail heavy than with full fuel, but not quite to the point of 
-nose heavy. Requires further tweaking.
+4 Slightly nose heavy with empty fuel. 
+
+4 Ineffective ailerons: Slow roll/ailerons only with level flight requires 
+23 seconds to complete--if it can be done at all (it requires a special 
+technique).  This is reported in a radial engine replica; it is duplicated in 
+Ver. 1.4 almost exactly, with the added feature that roll to the L is 
+noticeable faster/easier than roll to the R, due to large torque of Clerget 
+rotary engine.
+
+4 Ailerons induce 'awe-inspiring' opposite yaw (ie, yaw to the R on L roll) 
+and much drag.  
+
+4 Starting at level flight, adding full left aileron just moves the nose to 
+the right and it stays there. You don't start rolling right until you 
+coordinate with the rudder as well. (And ditto for full R aileron.) 
+
+4 In level flight at 100 mph indicated, just a hint of rudder is required 
+for straight flight.
+
+4 Thin airfoil shape affects lift, drag, AOA of stall, etc., and the effects 
+are quite different than for later aircraft with thicker wings. Stall speed: 
+Wikipedia and several other sources report 48 mph/41.7 knots.  However, this 
+does not match up with the Camel's reputed quick turn rate.  Lower stall 
+speed directly equates with quicker turn rate.  A replica Camel reports a 
+stall speed under 40 MPH (35 knots) and Frank Tallman reports stall speed of 
+35-40 mph (30.4-34.8 knots). A stall speed in this range seems to fit better 
+with the Camel's reported turn rate.  
+
+4 Current (Ver. 1.4+) drag/lift uses tweaked historical lift/drag curves for 
+the Camel's wing shape and also the known historical zero-lift drag 
+coefficient for the Camel.  
+
+3 P factor - evidently the shape of the prop creates a somewhat higher P 
+factor than for later similar aircraft, but the strength of this effect is an 
+open question.
 
 4 As you slow down over the top of the loop you must feed in rudder against 
 the torque.
 
-2.5 On strafing runs, as soon as the airspeed reaches 130 to 140 mph the nose 
+4 On strafing runs, as soon as the airspeed reaches 130 to 140 mph the nose 
 begins to hunt up and down, and the elevator becomes extremely sensitive. I 
 feel this action is due largely to the square windshield between the two 
-Vickers guns, causing a substantial burble over the tail surfaces. TODO: 
-JSBSim model does become more unstable above 150 mph or so but this effect 
-could likely be modelled more precisely.
+Vickers guns, causing a substantial burble over the tail surfaces.
 
-3.5 In stalls at 35 to 40 mph the nose drops frighteningly fast and hard to 
+3.9 In stalls at 35 to 40 mph the nose drops frighteningly fast and hard to 
 the right, but you also get control back quickly, although a surprising amount 
 of altitude has been lost. I have had the pleasure of limited dog fighting 
 with other WWI fighters, and there are none that can stay with a Camel in a 
@@ -182,21 +258,22 @@ hard to L instead of R. This can likely be tweaked in the model.
 half-loop was a often-used maneuver to reverse direction).
 
 4 Twin Vickers machine guns, 400 round capacity (historically 250-400 seems to 
-have been the range), best known realistic mass, ballistic, and
-aerodynamic characteristics for rounds, firing rate, characteristics of tracer 
-rounds, etc. Historically realistic re-loading scenario (requires landing, 
-full stop, engine off). See camel-alternative-submodels.xml for information 
-and documentation. NOTE: Aerodynamic characteristics of machine gun rounds 
-could be tweaked if better data were available; tracer visuals could be made 
+have been the range), best known realistic mass, ballistic, and aerodynamic 
+characteristics for rounds, firing rate, characteristics of tracer rounds, 
+etc. Historically realistic re-loading scenario (requires landing, full stop, 
+engine off). See camel-alternative-submodels.xml for information and 
+documentation. NOTE: Aerodynamic characteristics of machine gun rounds could 
+be tweaked if better data were available; tracer visuals could be made
 more realistic.
 
-2 Mixture needed constant manual adjustment; first adjustment about 250 about 
-ground on liftoff. TODO: Mixture is does not require the constant adjustment 
-described by Camel pilots--it acts more as a typical modern auto-mixture. I'm 
-not sure if JSBSIM can do this more realistically out of the box; this may 
-require custom Nasal programming to implement.
+3.8 Mixture needed constant manual adjustment; first adjustment about 250 ft 
+above ground on liftoff. For highest realism, switch on manual mixture
+using the Camel menu. TODO: Mixture and throttle adjustments are not as
+tweaky as described by Camel pilots. Mixture lever or dial isn't implemented;
+a simple Flightgear menu displays current mixture & RPM when manual mixture is 
+enabled.
 
-2.5 Control of engine thrust via blip switch and magneto rather than throttle. 
+3.5 Control of engine thrust via blip switch and magneto rather than throttle. 
 NOTE: Pilots can simulate the realistic historical way of controlling the 
 Camel's engine using this method: Leave throttle at full position at all times;
 manipulate engine power through use of the magnetos and blip switch alone. 
@@ -207,11 +284,42 @@ connect the joystick throttle control to the mixture, allowing constant
 adjustment of the mixture as necessary, and leave throttle always at full with 
 engine power adjusted by magnetos and blip switch.
 
-1 Engine start. JSBSim engine start requires a very extended cranking period. 
-Camel engines were notoriously difficult to start, but given the manual engine 
-starting methods of the day, they must have started either with a quick crank 
-or not at all.
+3 Engine power with both magnetos or one magneto matches historical engines. 
+NOTE: The one-magneto setting doesn't seem to match the historical Clerget 
+power, not exactly sure how to address this given JSBSim's propulsion model.
 
+4 Engine start. Camel engines were notoriously difficult to start. Given the 
+manual engine starting methods of the day, they must have started either with a 
+quick crank or not at all. NOTE: This is modeled by an approx. .5-1.5 second 
+cranking period, initiated by the 's' key, which starts the engine about 1/4 
+of attempts.
+
+4 Engine runs out of fuel/stops when inverted or pulling negative Gs.   On  slow
+roll (23 seconds), engine stops just  after  wings  vertical  and  starts  again
+soon after regaining erect flight.   NOTE:  This  is  implemented  via  a  Nasal
+routine that tracks fuel in a simple carburetor. Fuel  flows  or  out  depending
+on the forces involved and when the carburetor  runs  out  of  fuel  the  engine
+sputters and stops until the carburetor refills. 
+
+4 Service ceiling 19,600 ft.  Tested in ver. 1.7, by the standard of highest altitude able to sustain 100 fpm climb (1.66 fps).
+
+3.5 The 130HP Clerget Camel was generally lower performance/underperforming for altitudes greater than 10,000-12,000 feet.
+
+
+
+SPECIFICATIONS
+
+Cruising speed for Camel with 130 HP Clerget, per SopwithCamelSpecs-1955.pdf - 
+Flight, "Sopwith Camel", 22 April 1955, is
+
+                          115 mph @ 6500 ft
+                          113 mph @ 10000 ft
+                          106.5 mph @ 15000 ft
+                         
+                         Climb to
+                          6500 ft = 6 min 0 sec
+                          10000 ft = 10 min 35 sec
+                          15000 ft = 20 min 40 sec
 
 DOCUMENTS
 A number of relevant documents and notes, including facsimiles, articles, and 
@@ -219,6 +327,178 @@ calculations, are included in the Docs folder of this distribution.
 
 Below is a compilation of notes and comments by pilots with experience flying 
 the Camel.
+
+---
+
+Sopwith F.1 Camel;
+
+Clerget 9B;
+
+Wg 1 482
+
+We 962
+
+b 28.0
+
+  18.8
+
+S 231
+
+Wg/S 6.4
+
+Wg/Po11.4
+
+
+Vmax 105 (at 10,000 ft)
+
+Vs 48
+
+Cd0 0.0378
+
+f 8.73
+
+A 4.11
+
+L/Dmax 7.7
+
+http://www.hq.nasa.gov/office/pao/History/SP-468/app-a.htm
+
+---
+
+Based on the information contained in appendix II of reference 100 for the later 
+Sopwith Snipe, the gyroscopic action of the engine caused a nose-up moment in a 
+left turn and a nose-down moment in a right turn. Accordingly, left stick, a 
+large amount of left rudder, and moderate back stick were required in a steep 
+left turn; too much back stick caused the aircraft to stall and spin. Right 
+stick, a moderate amount of left rudder, and full back stick were required in a 
+steep right turn. There seems little doubt that these odd control techniques 
+could cause confusion and indecision on the part of an inexperienced pilot.
+
+100. Penrose, Harold: British Aviation. The Great War and Armistice - 1915-1919 (London: Putnam & Co., 1969).
+
+http://history.nasa.gov/SP-468/ch2-2.htm
+
+---
+
+R&M 592 Report on Accidents to Certain Aeroplanes with Special Reference to 
+Spinning - Aeronautical Research Committee
+
+*Note: This report refers to the Camel as "A"*
+
+II. BEHAVIOUR OF "A"
+
+4. During the course of the investigation the Committee had the advantage of 
+evidence on the behaviour of various aeroplanes from fourteen pilots with wide 
+flying experience.
+
+5. On many of the most important points their opinion was unanimous. Where 
+differences occurred the contradiction was more apparent than real, and 
+further evidence showed that such difference did not affect the actual 
+manoeuvre. For instance, some pilots make use of the lateral control, but an 
+agree that this does not materially affect the spinning of an aeroplane.
+
+6. All the pilots agreed that the machine A had certain peculiarities which 
+may be summarised as follows :*
+
+GENERAL CHARACTERISICS.
+
+7. (a) Stalling.-A as usually rigged is tail heavy and longitudinally 
+unstable. This is accentuated when a light Le Rhone engine is substituted for 
+a heavier Clerget and/or where guns and ammunition are removed.
+
+During normal horizontal flight, it is necessary to keep a continuous forward 
+pressure of about 14 Ibs. on the control column. Any relaxation of the pilot's 
+effort is therefore likely to end in a stall. Because of the longitudinal 
+instability of the aeroplane engine failure will be followed by a stall unless 
+the pilot dives the machine.
+
+8. (b) Turning.--Most of the pilots, in the course of their evidence drew 
+attention to the fact that a steeply-banked right hand turn requires full left 
+rudder. This is accounted for by gyroscopic effect.
+
+9. The unsymmetrical forces and couples on an aeroplane arise from engine 
+torque, slipstream and the gyroscopic couple. The first two, torque and 
+slipstream, may produce an unsymmetric setting of the ailerons and rudder 
+respectively. They do not produce effects which depend on the rate of turning 
+to any appreciable extent. The gyroscopic couple alone is capable of 
+explaining the effect mentioned above.
+
+10. The propeller, viewed from the pilot's seat, turns clockwise, and when the 
+aeroplane is turning to the right it tends to put its nose down as a 
+consequence of the gyroscopic couple. The tendency is countered by left rudder 
+and back (or top) elevator. Turning to the left, the nose of the aeroplane 
+tends to go up, and this effect is countered by left rudder and forward (or 
+bottom) elevator.
+
+From the evidence of the witnesses it is apparent that practically all flyers 
+feel strongly the need of a larger rudder surface.
+
+14. (d) Looping.-In the case of A all violent use of the controls must be 
+avoided. With the stick pulled too hard back, the machine will fail to 
+complete the loop. Further, if a straight loop is required, left rudder must 
+be used to counteract gyroscopic effect, and it was stated by one witness that 
+the rudder was barely sufficient for this manoeuvre.
+
+15 (e) Spinning.-The general method adopted when getting into a tight hand 
+spin is :* 
+
+(i) Cut off engine.
+
+(ii) Pull back control stick.
+
+(iii) Put on right rudder. This describes the action usually taken, but the 
+essential feature is that the machine is slowed down until it stalls, when the 
+normal sequence is a spin.
+
+16. There is general agreement as to the position of the controls when in a 
+spin. The essential feature is that the stick is kept hard back; the position 
+of rudder and ailerons is relatively unimportant.
+
+17. The normal method of coming out of a spin is with the control stick 
+slightly forward and other controls neutral. In this position the spin will 
+soon stop, out the nose of the machine must be held down until flying speed is 
+attained, when the stick should be pulled gently back, and the machine is 
+flattened out.
+
+In the case of an emergency, the spin can be stopped more rapidly by putting 
+the stick forward and reversing the rudder, but in this case a violent 
+manoeuvre is induced, and want of skill may lead to the machine dropping back 
+into the reverse spin.
+
+18. It appears to be established that the rotation cannot be reversed without 
+an intermediate period, during which the machine is re-stalled. This does not 
+require the fuselage to be brought to a horizontal position.
+
+19. As usually rigged, the aeroplane A will not come out of the spin with 
+hands off, and will only come out slowly, if at all, with all the controls 
+held strictly central.
+
+21. There is no aeroplane at present in use which spins faster than A; its 
+time period is 1 to 2 seconds, and the loss of height per turn 150 to 200 feet.
+
+23. Accidents due to spinning.-The Committee have considered 41 accidents to 
+machine A due to stalling and spinning. These accidents can be divided into 
+two groups :* Group (i) includes accidents due to stalls at low level. Group 
+(ii) includes accidents due to spins continued to the ground from a high 
+level. A classified list will be found in Appendix IV.
+
+24. On all aeroplanes loss of control occurs when stalled. At a low level this 
+results in a nose dive or spin, and an accident ensues as lack of head room 
+precludes the completion of the manoeuvre before the ground is reached. 
+Accidents in group (0 belong to this category. The common feature is that the 
+stall was unintentional, the primary cause of the stall varying (e.g., engine 
+failure, faulty turn, general inexperience).
+
+38. In cases where previous dual instruction on A is impossible the movements 
+necessary in a spin must be impressed so forcibly on the pupil that they will 
+return to his mind subconsciously when the difficulty arises. The routine 
+method is :
+
+(i) Stick forward and central and rudder central.
+(ii) Wait for the machine to acquire flying speed.
+(iii) Pull out gently."
+
+Source: http://www.theaerodrome.com/forum/aircraft/56275-question-ways-get-killed-sopwith-camel-4.html
 
 ---
 
@@ -230,16 +510,18 @@ aircraft from the same era (p. 7).
 
 http://home.comcast.net/~clipper-108/AIAAPaper2005-119.pdf 
 
+Not su
+
 ---
 
 "I lived its quick response - it was so remarkably swift and sensitive that it 
-demanded constant attention. The torque caused the nose to rise in aleft-hand 
-turn and rop in aright-hand turn. Fairly large amounts of left rudder were 
-needed in bothturns to correct for these idiosyncrasis. The tiny biplane was 
-so snesitive in a turn, however, that if the turn were tightened just a little,
- it was likely to whip into a tight spin - quickly and without warning. Oddly 
-this very ease for spining was used in combat by many pilots to shake a 
-persisten German from their tails. sopwith Came vs Fokker Dr 1: Western Front 
+demanded constant attention. The torque caused the nose to rise in a left-hand 
+turn and drop in a right-hand turn. Fairly large amounts of left rudder were 
+needed in both turns to correct for these idiosyncrasis. The tiny biplane was 
+so sensitive in a turn, however, that if the turn were tightened just a little,
+it was likely to whip into a tight spin - quickly and without warning. Oddly 
+this very ease for spinning was used in combat by many pilots to shake a 
+persisten German from their tails. Sopwith Camel vs Fokker Dr 1: Western Front 
 1917-18 by Jon Guttman, Harry Dempsey, quoting from mark Curtis Kinney's 
 memoir, I Flew a Camel
 
@@ -295,8 +577,7 @@ flying time used it as a lethal weapon.
 ---
 
 http://www.theaerodrome.com/forum/2001/11306-sopwith-camel-flight-characteristics-3.html
-In 
-those notes are a description of when and why the mixture had to be adjusted. 
+In those notes are a description of when and why the mixture had to be adjusted. 
 If memory serves, it was perilously low to the ground, under 250 feet. The 
 shift to left rudder would have to have taken place either just before or just 
 after this, because the whole point of changing the mixture was that the 
@@ -333,17 +614,18 @@ unacceptable as a military aircraft...
 by K.M. Molson)
 
 http://www.theaerodrome.com/forum/2001/11306-sopwith-camel-flight-characteristics.html
+
 ---
-"As 
-I opened the throttle I simultaneously applied full left rudder and as I 
+
+"As I opened the throttle I simultaneously applied full left rudder and as I 
 became airborn I found that I had full left rudder on. (This was the answer 
 always, as I afterwards found, and I was never in trouble again from this 
 cause)"
 
-August 98 issue of FLight journal has the flying of the Camel by Rich King. 
-160 Hp Gnome engine (yes, rotary) qoute:
+August 98 issue of Flight journal has the flying of the Camel by Rich King. 
+160 Hp Gnome engine (yes, rotary), quote:
 
-..Right rudder is needed to keep the Camel tracking straight ahead while it is 
+Right rudder is needed to keep the Camel tracking straight ahead while it is 
 on the runway, and as the tail comes up, I find that my rudder correction was 
 right on. I m facing straight down the center of the runway.........A little 
 back pressure on the control stick and the bumpy ground falls away behind me, 
@@ -353,9 +635,10 @@ runway while its speed continues to increase. .... Left Rudder is now needed
 to keep the racing Camel straight....." end quote
 
 http://www.theaerodrome.com/forum/2001/11306-sopwith-camel-flight-characteristics-2.html
+
 ---
-From 
-the Frank Tallman book "Flying the old planes"...
+
+From the Frank Tallman book "Flying the old planes"...
 
 My Sopwith Camel is, as far as I'm aware, the only original World War 1 Camel 
 ever brought back to flying condition. It was originally owned by Colonel 
@@ -540,11 +823,206 @@ http://www.theaerodrome.com/forum/aircraft/45869-sopwith-camel-myth-6.html
 
 ---
 
-Indeed you are correct about the Rudder - it's area was a paltry 4.9 sq. ft. 
-(and fin at 3 sq. ft.) 
-http://www.theaerodrome.com/forum/aircraft/47951-sopwith-camel-myth-2-a.html
+Australian ace Edgar McCloughry:
+
+"I at once turned but they did not wait, one of the horrible characteristics 
+of a camel being, as I will describe later, that it is unable to catch any 
+other machine with the exception of the Fokker Triplane on the level."
+
+"One word on the 'Camel': There is not one pilot in the squadron who would not 
+argue to the end for a Camel. Although slow, she could get around anything, 
+also one could not run away from anything, which rather aimed for success."
+
+Arthur Cobby, another Australian ace:
+
+"In this manner we accounted for a few of the enemy, but they could dive 
+faster than our Camels. Unless we got close to them early in their dive, they 
+would just keep on diving and so get away. ... If we were only able to 
+encourage the enemy to get in a dogfight, things were easy, as a Camel could 
+out maneuver anything."
+
+Comments above are by Australian pilots who used the 130 HP Clerget model of 
+the Camel; other squadrons used 140 HP engines; the 150 HP model was used by 
+English squadrons at this time.
+
+http://www.kuro5hin.org/story/2002/12/1/02631/3666
 
 ---
+
+Like many other World War I airplanes, the Camel's vertical tail was too 
+small. Any stall automatically became a snap roll spin entry, even without 
+intentional rudder deflection. Finally, once spinning, the Camel required 
+vigorous rudder defliction against the spin to stop the motion. A well-behaved 
+airplane, on theother hand, has to be held in a spin; letting the controls go 
+free should result in automatic recovery. 
+
+
+http://assets.cambridge.org/97805218/09924/sample/9780521809924ws.pdf
+---
+
+Indeed you are correct about the Rudder - it's area was a paltry 4.9 sq. ft. 
+(and fin at 3 sq. ft.) 
+
+http://www.theaerodrome.com/forum/aircraft/47951-sopwith-camel-myth-2-a.html
+
+
+----
+
+The pathetically small fixed area on the fin/rudder made the problems in yaw 
+even worse. A pilot generally doesn't hold the rudder pedals stiffly enough 
+for the rudder to contribute very much to yaw stability.
+
+http://www.djaerotech.com/dj_askjd/dj_questions/short_coupled.html
+
+---
+
+Replica Camel with rotary engine:
+
+The first flights on the plane proved to be very impressive with performance figures very close to the original aircraft, stall speed is below 40 mph, cruise comes in at 80 mph and climb is a conservative 1000 feet per minute. 
+
+http://www.lightsportaircraftpilot.com/airventure2010/2.html
+http://en.wikipedia.org/wiki/Airdrome_Sopwith_Camel
+
+---
+
+Arthur Cobby:
+
+We had not come into contact with it [Fokker DVII] to any extent as most of our 
+patrol work was being done at lower altitude, but our fellow Australians in No.2 
+[No.2 Sqn Australian Flying Corps] were continually meeting them. Their SE5a's 
+could get to greater heights than our Camels, which were at their best up to 
+about 12,000 ft. We could get much higher of course, but the performance fell 
+off rapidly above this level, and against the new Fokker, would put up an 
+indifferent show. Later on we did meet them up higher and managed by sheer hard 
+flying to hold our own, but unless one was an exceptional good pilot the odds 
+were definitely not good.
+
+---
+
+Speed:
+
+The trials for the Sopwith Camel was done with an 150 hp Bentley of which only 
+the Royal Naval Air Service squadrons were equipped. The RAF, AFC and USAS 
+squadrons equipped with the Sopwith Camel had 130 or 140 hp Clergets. The 
+Bentley trials gave the Camel a top speed of 114 mph at 15,000 feet while the 
+Snipe at the same height had a speed of 113 mph. However this statistic is 
+meaningless as the Sopwith Camel was obsolete in comparison to the Fokker DVII 
+above 12,000 feet.
+
+http://www.southsearepublic.org/article/1501/read/
+---
+
+Gyroscopic effect:
+
+In the case of the Camel, with approximately 400 pounds of gyroscope hanging 
+on the nose, a turn to the left would cause a gyroscopic precession moment 
+that would try to raise the nose. A turn to the right would shove the nose 
+down. In a right turn this acts like down elevator. If you roll into a steep 
+bank and shove in enough down, you will find yourself in knife-edge flight 
+with no turn rate. OTOH, for a steep turn you normally need a pretty fair dose 
+of "up", and the precession in a left turn would provide essentially the same 
+thing. Pulling the nose up would cause a yaw to the right, and pushing the 
+nose down would yaw the airplane to the left. If you stall, the rapid 
+pitch-down at the stall break would cause a strong and rapid yaw to the left, 
+just as if you had just stomped on the left rudder. And we all know what 
+happens when you boot the rudder right at the stall break.
+
+http://www.djaerotech.com/dj_askjd/dj_questions/short_coupled.html
+
+---
+
+
+
+Cause of take-off crashes:
+
+You take off, start a normal climb (nose well up, airspeed low, power at max), 
+and just as you start into that standard 90 degree left turn after takeoff, 
+the engine begins to sputter, instantly drawing your attention away from the 
+horizon and into the cockpit. Meanwhile, unbeknownst to the pilot (whose head 
+is in the cockpit, and who has never experienced a plane that automatically 
+tries to change its pitch attitude dramatically whenever it turns) the left 
+turn plus the gyroscopic effects starts inexorably pulling the nose up. The 
+airplane's nearly non-existent pitch stability (due to the aft C/G) doesn't 
+put up much resistance to this. The more nose-up attitude adds to the already 
+decaying airspeed (caused by the loss of power from the sputtering engine), 
+and sure enough, the airflow lets go from those thin wings and the plane 
+stalls violently. The pilot, suddenly attentive but completely disoriented, 
+looks up (far too late to do anything about the situation) just in time to see 
+the nose yaw violently to the left as it falls through in the stall break. In 
+this era long before the relationship between stall, angle of attack and 
+airspeed was properly understood, our neophite pilot reacts (naturally) by 
+pulling the stick back the rest of the way, and probably adding full right 
+aileron as well. With utterly no chance for a recovery at this point, the 
+airplane does about a quarter turn before smiting itself against terra-firma. 
+The rotation is slight enough that his buddies on the ground don't recognize 
+that it was indeed a spin, perpetuating the mystery and the myth, and delaying 
+any meaningful insight into solving the problem. Today, however, we can 
+recognize from the photos that it was indeed a spin that added our hapless 
+hero to the Camel's list of statistics. Clearly visible in the photo is that 
+fact that one set of wings are wrapped around the nose, and the other set are 
+wrapped around the tail, indicating that the plane was rotating when it hit.
+
+http://www.djaerotech.com/dj_askjd/dj_questions/short_coupled.html
+
+---
+
+Camel Spinning, Camel Gyroscopic couple & rudder effectiveness compared to the 
+SE5a
+
+From: British Aviation, The Great War and Armistice 1915-1918 by Harold 
+Penrose. page 376
+
+Even more worrying were Camel crashes through spinning, for the S.E.5a was 
+comparatively immune when flown under similar circumstances. Camels were 
+usually rigged tail-heavy with full tank and were then longi­tudinally 
+unstable like the D.H.6. This was accentuated when the lighter Le Rhone was 
+substituted for a Clerget, or guns and ammunition were removed. Usually a 
+continuous forward pressure of some 14 lb was re­quired on the control column 
+when in normal horizontal flight; any relaxation ended in a stall, and so did 
+engine failure unless the pilot instantly dived the machine.
+
+In the course of evidence on the machine's behaviour, most pilots drew 
+attention to the necessity of applying full left rudder in a steeply banked 
+right-hand turn. Torque and slipstream pro­duced unsymmetrical settings of 
+aileron and rudder, but not effects dependent on rate of turn to any great 
+extent, the gyroscopic couple alone being capable of that. Propeller and 
+engine revolved clockwise, viewed from the pilot's seat, so when the aeroplane 
+was turning right the gyro­scopic couple put the nose down, countered by top, 
+that is left, rudder and back elevator.
+
+Analysis showed that the effective couple produced by a given setting of the 
+rudder on a Camel was 40 per cent less than for the S.E.5a, whereas the 
+gyroscopic couple to be counteracted was more than twice as great. To make the 
+two machines equally effective would necessi­tate doubling the Camel's rudder 
+area.
+
+It was immediately evident with a Camel that violent use of elevator must be 
+avoided, for when the stick was pulled back too hard the machine would not 
+complete a loop. By contrast, full left rudder could scarcely keep a loop 
+straight, but surprisingly when it came to spinning, the rudder was relatively 
+unimportant. As soon as the stick was pulled hard back and the machine stalled 
+fully it would flick into a spin, but quickly stopped if the column was eased 
+slightly forward with other controls neutral, and could be stopped almost 
+instantly by reversing the rudder as well as giving forward stick -though this 
+induced a violent manoeuvre, and lack of skill could result in the machine 
+entering a reverse spin. If the pilot became dizzy the Camel would not come 
+out of a spin with controls free, and only slowly ifall controls were held 
+central. That forward push on the stick was essential.
+
+---
+
+Flight International 2 May 1968, By RONALD SYKES, DFC
+
+"Pull up into a stall and apply the usual encouragement from the rudder; the 
+Camel will then cartwheel over and then flick into a spin (which, with the 
+stick held right back, will be a fast one). Centralize the controls and after 
+about four more turns the machine will come out of the spin: it can be forced 
+out more quickly, by applying opposite rudder and pushing the stick forward 
+briskly, though this does not always have the desired result."
+
+---
+
+JSBSIM & THE DIRECTION OF THE GYROSCOPIC EFFECT
 
 JSBSim seems to have the direction of force for the moment of inertia of the 
 gyroscopic effect of the engine reversed. This creates a difficult problem for 
@@ -585,8 +1063,219 @@ Camel JSBSim flight modle:
   So what we're going to do is put in sense=1 here to get correct p_factor and 
   torque effects, but then put in a correction down in the aero section to 
   correct the moments, which JSBSim seems to have reversed.
+
+THICK VS THIN AIRFOILS; DRAG AND LIFT
+
+Thick airfoils had a great advantage besides the structural one. Compared with 
+thin wings, thick wings could produce more lift, by about 25 percent, because 
+the gentle roundness of the leading edges helped air follow the curvature of 
+the airfoil and not break away. The added lift did not affect climb rate, but 
+it improved maneuverability, because the space within which an airplane can 
+turn is determined by its maximum lift.
+
+Triplanes could also fly in a very nose-high attitude, because the thick wing 
+kept producing lift at angles at which the sharp-edged wings of Allied 
+fighters had already given up. A U.S. pilot, James Hall, wrote of the Fokkers’ 
+“trick of standing on their tails beneath one” with guns firing upward.
+
+http://www.airspacemag.com/history-of-flight/red_baron.html?c=y&page=2
+
+---
+
                 
+ROTARY ENGINE CONTROLS
+
+It is often asserted that rotary engines had no carburettor and hence power 
+could only be reduced by intermittently cutting the ignition using a "blip" 
+switch, which grounded the magneto when pressed, shutting off power to the 
+spark plugs and stopping ignition. However, rotaries did have a simple 
+carburettor which combined a gasoline jet and a flap valve for throtting the 
+air supply. Unlike modern carburettors, it could not keep the fuel/air ratio 
+constant over a range of throttle openings; in use, a pilot would set the 
+throttle to the desired setting (usually full open) then adjust the fuel/air 
+mixture to suit using a separate "fine adjustment" lever that controlled the 
+fuel valve.
+
+Due to the Gnôme's large inertia, it was possible to adjust the appropriate 
+fuel/air mixture by trial and error without stalling it. After starting the 
+engine with a known setting that allowed it to idle, the air valve was opened 
+until maximum engine speed was obtained. Since the reverse process was 
+difficult, "throttling" was accomplished by temporarily cutting the ignition 
+using the blip switch.
+
+By the middle stages of World War I some throttling capability was found 
+necessary to allow pilots to fly in formation, and the improved carburettors 
+which entered use allowed a power reduction of up to 25%. The pilot would 
+close off the air valve to the required position, then re-adjust the fuel/air 
+mixture to suit. Experienced pilots would gently back off the fuel lever at 
+frequent intervals to make sure that the mixture was not too rich: a too-lean 
+mixture was preferable, since power recovery would be instant when the fuel 
+supply was increased, whereas a too-rich mixture could take up to 7 seconds to 
+recover and could also cause fouling of spark plugs and the cylinders to cut 
+out.
+
+The Gnôme Monosoupape was an exception to this, since most of its air supply 
+was taken in through the exhaust valve, and so could not be controlled via the 
+crankcase intake. Monosoupapes therefore had a single petrol regulating 
+control used for a limited degree of speed regulation. Early models also 
+featured variable valve timing to give greater control, but this caused the 
+valves to burn and therefore it was abandoned.
+
+Later rotaries still used blipping the ignition for landing, and some engines 
+were equipped with a switch that cut out only some rather than all of the 
+cylinders to ensure that the engine kept running and did not oil up. A few 9 
+cylinder rotaries had this capability, typically allowing 1, 3, or 6 cylinders 
+to be kept running. Some 9 cylinder Monosoupapes had a selector switch which 
+allowed the pilot to cut out six cylinders so that each cylinder fired only 
+once per three engine revolutions but the engine remained in perfect balance. 
+Some documentation regarding the Fokker Eindecker shows a rotary selector 
+switch to cut out a selected number of cylinders suggesting that German 
+rotaries did as well.
+
+By 1918 a Clerget handbook advised that all necessary control was to be 
+effected using the throttle, and the engine was to be stopped and started by 
+turning the fuel on and off. Pilots were advised to avoid use of the cut out 
+switch as it would eventually damage the engine.
+
+The blip switch is, however, still recommended for use during landing 
+rotary-engined aircraft in modern times as it allows pilots a more reliable, 
+quick source of power that lends itself to modern airfields. The landing 
+procedure using a blip switch involved shutting off the fuel using the fuel 
+lever, while leaving the blip switch on. The windmilling propeller allowed the 
+engine to continue to spin without delivering any power as the aircraft 
+descended. It was important to leave the blip switch on while the fuel was 
+shut off to allow the spark plugs to continue to spark and keep them from 
+oiling up, while the engine could easily be restarted simply by re-opening the 
+fuel valve. If a pilot shut the engine off by holding the blip switch down 
+without cutting off the fuel, fuel would continue to pass through the engine 
+without combusting and raw fuel/air mix would collect in the cowling. This 
+could cause a serious fire when the switch was released, or alternatively 
+could cause the spark plugs to oil up and prevent the engine restarting. 
+
+Source: http://www.sim-outhouse.com/sohforums/showthread.php?6993-Rotary-Engines
+
+---
+
+The early Gnome 50-80 hp 7 cylinder rotary aero engines introduced from 1908 
+onwards had no throttle control, and the fuel/air mixture could only be 
+adjusted for fine tuning on the ground by a mechanic. The engine was therefore 
+either on or off, although there was a blip-switch for the pilot to 
+temporarily cut ignition. The development of the 100hp Gnome Monosoupape (or 
+'Mono') in 1913 introduced pilot-control of the fuel-air mixture for the first 
+time, with a lever that regulated petrol flow to the engine. This permitted 
+the pilot to make small adjustments to the RPM, or lean the fuel mixture at 
+higher altitudes to maintain engine efficiency. Lt. R.T. Leighton provides a 
+very good description of this in his pilot notes published by the Shuttleworth 
+Collection: "The engine should give 1,150-1,200 rpm, as height is gained, then 
+petrol should be cut down until engine is giving 1,050-1,100 rpm, when machine 
+[Avro 505K] flies level at 65 mph. The machine at full revs flies level at 85 
+mph...[to descend] shut petrol off...glide down at 55 mph...do not 'buzz' 
+engine...taxi in by buzzing the engine with petrol about 1" on adjustment". 
+Pilots were now discouraged from using the blip-switch, as over-use could 
+stress the engine and (in the mono) cause an engine fire. In the 100hp 
+Monosoupape the engine rpm could only be reduced by about 10% or 20% without 
+risking engine cut-out. In 1916 the 160 hp 14 cylinder version of the Gnome 
+Monosoupape introduced another refinement in the form of a second magneto 
+switch that could be used to cut ignition temporarily to two or more of the 14 
+cylinders in any one cycle to give reduced power rather than no power at all: 
+a switch that could be used to reduce engine output by approximately 1/8, 1/4 
+or 1/2.
+
+The Le Rhone and Clerget engines introduced a second mixture control, to 
+control the air added to the mixture (often referred to as the 'throttle' by 
+WWI pilots) although the petrol adjustment lever was also retained (referred 
+to under a number of different names, but most usualy as the 'fine adjustment' 
+by RFC pilots). There has been quite a bit written on the Le Rhone, which was 
+much liked by pilots. Cecil Lewis, in 'Sagittarius rising' comments "The 
+rotary was an 80hp Le Rhone. It was a beauty, the sweetest running rotary ever 
+built. It throttled down and ticked over like a water-cooled stationary, and 
+was as smooth as silk over its whole range". The Le Rhone was also ahead of 
+its time in linking the throttle to the needle valve which regulated the 
+petrol supply: Lt. Leighton comments in his pilots notes that "Theoretically, 
+the position of the fine adjustment can be found once and for all for every 
+position of the throttle, so that having set fine adjustment once, it need not 
+be moved again. The throttle lever then being worked as on a stationary 
+engine". He adds, though, that "Practically, the engine will run if worked 
+this way, but better results are obtained by varying the position of the fine 
+adjustment with varying positions of the throttle lever". The two levers were 
+positioned together normally on the left of the cockpit, on a quadrant marked 
+from 1-10.
+
+The Clerget had the same arrangement of throttle and fine adjustment levers, 
+but dispensed with the unreliable linkage between the two - it was much liked 
+by ack emmas, as it was easier than the Le Rhone to maintain in the field, and 
+by the War Department as it was slightly cheaper than the Le Rhone. In both 
+the Le Rhone and the Clerget (and the later Bentley) the combination of a 
+throttle and a fine adjustment did take some getting used to, and RPM could 
+not be changed rapidly in flight even by experienced pilots. I do not believe 
+the 'throttle' was used much, if at all, in combat - it was used mainly to 
+ensure optimum endurance at altitude, to make formation flying easier, and to 
+reduce power on landing. Engine rpm could not, in practice, be reduced below 
+50% or so of engine power, however, so a powered landing would still require 
+use of the blip switch unless the pilot was confident enough to bring the 
+airoplane in by gliding down with the petrol switched off. Robert W. Bradford 
+(An Associate Director of the [Canadian?] National Aviation Museum) is quoted 
+as saying "the 110/120 hp Le Rhone rotary has the characteristics of all early 
+rotary engines - they have a high idling speed in proportion to the full power 
+rpm. They simply do not 'tick over' as a radial or inline engine would do - in 
+fact with the fixed pitch wooden propeller, they idle at about 45% of full 
+engine speed (500 rpm as against 1150 rpm for take-off at full power)" 
+[billybishop.net/bishopF.html]. I have seen a variety of other figures for the 
+safe idling speed of Le Rhones and Clergets, from 600 rpm up to 800 rpm, and 
+there is some evidence that the Bentley rotaries might have idled at a lower 
+rpm [Blakemore,1986] - in practice, I suspect each engine would be slightly 
+different depending on the make, length of service or time between overhauls, 
+the skill of the fitter, maintenance standards in the field, etc. It does seem 
+clear, however, that most pilots would be reluctant to risk an engine cut-out 
+(particularly in the final approach to landing) by cutting rpm back further 
+than 50% of engine speed.
+
+So these rotary engines could be 'throttled' up or down, but it was certainly 
+not a simple procedure and pilots report that it took considerable practice 
+before it became second nature (engine failure on take-off was often caused by 
+the pilot getting the mixture wrong and then choking the engine). Also, these 
+engines could not be 'throttled' up or down quickly - it took about 7 seconds 
+before the change in the mixture setting had any effect on engine power [Nahum,
+ 1987]. Using such a 'throttle' in combat was therefore unlikely to be 
+practicable. Most pilots would continue to use the blip-switch to produce 
+sudden changes in engine power, mostly on the final approach to landing 
+(although they were officially discouraged from doing so, particularloy at 
+full engine power, as it damaged the engine).
+
+German rotaries were similar to the early Gnome and Le Rhone engines, although 
+German pilots had both throttle and mixture control for even those engines 
+based on the early Gnome design (so the Fokker E.III/E.IV had both a throttle 
+and a mixture lever). I think that the most interesting of the German rotaries 
+is the late war contra-rotating 160hp SH III fitted to the Siemens Schuckert 
+DIII and IV. This was "fitted with twin magnetos and speed was governed by a 
+proper throttle control, sensitive down to about 350 rpm" [Profile 86].
+
+Blakemore, L N. Bentley BR2 World War 1 rotary aero engine: building the one 
+quarter scale working replica. Yalanga, 1986.
+
+Leighton, R T. Pilots' notes for the handling of World War I warplanes and 
+their rotary engines. Shuttleworth Collection. [Pamphlet. Notes originally 
+written in 1917 by an RFC pilot. Covers the Monosoupape, Clerget and Le Rhone 
+rotaries, with notes on flying Avro, 1 1/2 Strutter and Pup].
+
+Morse, William. Rotary engines of World War One. Nelson and Saunders, 1987
+
+Nahum, Andrew. The rotary aero engine. HMSO, 1987.
+
+Profile Publication 86: The Siemens Schuckert DIII and IV. 1966.
+
+Lewis, Cecil. Sagittarius rising. Peter Davies, 1966.
+
+http://www.theaerodrome.com/forum/ai...-1-allied.html
+
+http://www.theaerodrome.com/forum/ai...-2-german.html
+
+Source: http://www.sim-outhouse.com/sohforums/showthread.php?6993-Rotary-Engines
+
+---
+
 ACKNOWLEDGEMENTS
+
 The enclosed Sopwith Camel JSBSim flight model started as an 
 Aeromatic-generated model and was then heavily modified based on ideas from 
 the FlightGear and JSBSim forums, wiki, documentation, and other JSBSim models.
