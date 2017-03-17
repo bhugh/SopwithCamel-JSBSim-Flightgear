@@ -225,8 +225,13 @@ for the rudder to contribute very much to yaw stability.
          design feature so remains unchanged. --> 
         <!-- <ixx unit="SLUG*FT2">708</ixx> -->
         <ixx unit="SLUG*FT2">740</ixx>
+        <!--2.0gamma values -->
         <iyy unit="SLUG*FT2">182.7</iyy>
         <izz unit="SLUG*FT2">366.9</izz>
+        
+        <!-- experiment for 2.0delta, putting these values up a bit.  It causes strange stall/spin behavior, so boing back to the 2.0gamma values -->
+        <!-- <iyy unit="SLUG*FT2">365.4</iyy>
+        <izz unit="SLUG*FT2">733.8</izz> -->
         <ixz unit="KG*M2">0</ixz>
         <iyz unit="KG*M2">0</iyz>
         <ixy unit="KG*M2">0</ixy>
@@ -906,9 +911,9 @@ We're modeling the 130 HP Clerget here, so 30 imp. gal in one tank and 7 in the 
                   <abs>
                             <property>fcs/elevator-cmd-norm</property>               
                   </abs>                                 
-                  <abs>
+                  <!-- <abs>
                             <property>fcs/elevator-cmd-norm</property>               
-                  </abs>                  
+                  </abs> -->                  
                  </product>
                </function>
                <clipto> 
@@ -961,9 +966,9 @@ We're modeling the 130 HP Clerget here, so 30 imp. gal in one tank and 7 in the 
                   <abs>
                             <property>fcs/aileron-cmd-norm</property>               
                   </abs>
-                  <abs>
+                  <!-- <abs>
                             <property>fcs/aileron-cmd-norm</property>               
-                  </abs>                                                    
+                  </abs> -->                                                    
                  </product>
                </function>
                <clipto> 
@@ -1043,9 +1048,9 @@ We're modeling the 130 HP Clerget here, so 30 imp. gal in one tank and 7 in the 
                   <abs>
                             <property>fcs/rudder-cmd-norm</property>               
                   </abs>                                 
-                  <abs>
+                  <!-- <abs>
                             <property>fcs/rudder-cmd-norm</property>               
-                  </abs>                                 
+                  </abs> -->                                 
                  </product>
                </function>
                <clipto> 
@@ -1243,7 +1248,7 @@ We're modeling the 130 HP Clerget here, so 30 imp. gal in one tank and 7 in the 
                     <property>aero/function/kCLge</property>
                     <!-- 1.4 candidate <value>1.4</value> -->
                     <!-- ver 1.8 value: 1.4 -->
-                    <value>1.0</value>
+                    <value>1.1</value>
                     <table>
                         <!--
                         <independentVar>aero/alpha-rad</independentVar>
